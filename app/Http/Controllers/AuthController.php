@@ -19,15 +19,15 @@ class AuthController extends Controller
             DB::connection()->getPdo();
         } catch (\Exception $e) {
             throw ValidationException::withMessages([
-                'email' => ['Database is down'],
+                'phone_number' => ['Database is down'],
             ]);
         }
 
-        $user = User::where('email', $request->email)
+        $user = User::where('phone_number', $request->phone_number)
             ->with("company:id,user_id,name,location,logo,company_code,expiry")
             ->select(
                 // "id",
-                // "email",
+                // "phone_number",
                 // "password",
                 // "is_master",
                 // "role_id",
@@ -113,15 +113,15 @@ class AuthController extends Controller
     {
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
+                'phone_number' => ['The provided credentials are incorrect.'],
             ]);
         } else if ($user->company_id > 0 && $user->company->expiry < now()) {
             throw ValidationException::withMessages([
-                'email' => ['Subscription has been expired.'],
+                'phone_number' => ['Subscription has been expired.'],
             ]);
         } else if (!$user->web_login_access && !$user->is_master) {
             throw ValidationException::withMessages([
-                'email' => ['Login access is not available. Please contact your admin.'],
+                'phone_number' => ['Login access is not available. Please contact your admin.'],
             ]);
         }
     }
