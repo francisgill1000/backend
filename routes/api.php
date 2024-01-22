@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,8 +17,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+Route::post("user", [UserController::class, "store"]);
+Route::post("login", [AuthController::class, "login"]);
+
+Route::middleware('auth:sanctum')->get("me", [AuthController::class, "me"]);
+Route::middleware('auth:sanctum')->get("logout", [AuthController::class, "logout"]);
+
+
+
 
 Route::apiResource("expense", ExpenseController::class);
