@@ -13,6 +13,8 @@ class Expense extends Model
 
     public function scopeFilter($query, $startDate, $endDate)
     {
-        return $query->whereBetween('date', [$startDate, $endDate]);
+        return $query
+            ->where("user_id", request("user_id") ?? 0)
+            ->whereBetween('date', [$startDate, $endDate]);
     }
 }

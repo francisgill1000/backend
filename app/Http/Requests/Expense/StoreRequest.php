@@ -26,6 +26,7 @@ class StoreRequest extends FormRequest
             'label' => 'required|string',
             'amount' => 'required|numeric',
             'date' => 'required|date',
+            'user_id' => "required"
         ];
     }
 }

@@ -28,3 +28,8 @@ Route::middleware('auth:sanctum')->get("logout", [AuthController::class, "logout
 
 
 Route::apiResource("expense", ExpenseController::class);
+Route::get("todayExpense", [ExpenseController::class,"todayExpense"]);
+Route::get("weeklyExpense", [ExpenseController::class,"weeklyExpense"]);
+Route::get("monthlyExpense", [ExpenseController::class,"monthlyExpense"]);
+
+
