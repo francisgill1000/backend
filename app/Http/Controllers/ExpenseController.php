@@ -32,7 +32,7 @@ class ExpenseController extends Controller
     public function todayExpense()
     {
         $query = Expense::query();
-        $query->filter(date("Y-m-24"),date("Y-m-24"));
+        $query->filter(date("Y-m-24"), date("Y-m-24"));
         return number_format($query->sum("amount"), 2);
     }
 
@@ -46,7 +46,7 @@ class ExpenseController extends Controller
     public function monthlyExpense()
     {
         $query = Expense::query();
-        $query->whereMonth(date("m"));
+        $query->whereMonth("date", date("m"));
         return number_format($query->sum("amount"), 2);
     }
 
