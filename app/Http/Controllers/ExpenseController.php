@@ -46,7 +46,7 @@ class ExpenseController extends Controller
     public function monthlyExpense()
     {
         $query = Expense::query();
-        $query->filter(now()->startOfMonth(), now()->endOfMonth());
+        $query->whereMonth(date("m"));
         return number_format($query->sum("amount"), 2);
     }
 
