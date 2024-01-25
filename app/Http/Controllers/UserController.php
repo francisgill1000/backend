@@ -13,23 +13,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        // User::truncate();
-
-        $query = User::query();
-
-        // Check if start_date and end_date are provided
-        if (request()->has('start_date') && request()->has('end_date')) {
-            $startDate = request('start_date');
-            $endDate = request('end_date');
-
-            // Apply the date range scope
-            $query->filter($startDate, $endDate);
-        }
-
-        // Paginate the results (default to 10 items per page if not specified)
-        $query->orderBy("id", "desc");
-
-        return $query->paginate(request('itemsPerPage') ?? 15);
+        return User::orderBy("id", "desc")->paginate(request('itemsPerPage') ?? 15);
     }
 
     /**
