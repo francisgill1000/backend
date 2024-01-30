@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Response;
 
 class AuthController extends Controller
 {
@@ -14,7 +15,7 @@ class AuthController extends Controller
         $user = User::where(['number' => $request->number])->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return 'The provided credentials are incorrect.';
+            return Response::json('The provided credentials are incorrect.', 422);
         }
 
         return $user->createToken('token')->plainTextToken;
