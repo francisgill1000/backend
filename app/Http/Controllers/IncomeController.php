@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Expense\StoreRequest;
-use App\Models\Expense;
+use App\Http\Requests\Income\StoreRequest;
+use App\Models\Income;
 use Illuminate\Http\Request;
 
-class ExpenseController extends Controller
+class IncomeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $query = Expense::query();
+        $query = Income::query();
 
         // Check if start_date and end_date are provided
         if (request()->has('start_date') && request()->has('end_date')) {
@@ -29,23 +29,23 @@ class ExpenseController extends Controller
         return $query->paginate(request('itemsPerPage') ?? 15);
     }
 
-    public function todayExpense()
+    public function todayIncome()
     {
-        $query = Expense::query();
+        $query = Income::query();
         $query->filter(date("Y-m-24"), date("Y-m-24"));
         return number_format($query->sum("amount"), 2);
     }
 
-    public function weeklyExpense()
+    public function weeklyIncome()
     {
-        $query = Expense::query();
+        $query = Income::query();
         $query->filter(now()->startOfWeek(), now()->endOfWeek());
         return number_format($query->sum("amount"), 2);
     }
 
-    public function monthlyExpense()
+    public function monthlyIncome()
     {
-        return number_format(Expense::whereMonth("date", date("m"))->sum("amount"), 2);
+        return number_format(Income::whereMonth("date", date("m"))->sum("amount"), 2);
     }
 
     /**
@@ -53,33 +53,33 @@ class ExpenseController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        return Expense::create($request->validated());
+        return Income::create($request->validated());
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Expense $expense)
+    public function show(Income $Income)
     {
-        return $expense;
+        return $Income;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Expense $expense)
+    public function update(StoreRequest $request, Income $Income)
     {
-        $expense->update($request->validated());
+        $Income->update($request->validated());
 
-        return $expense;
+        return $Income;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Expense $Expense)
+    public function destroy(Income $Income)
     {
-        $Expense->delete();
+        $Income->delete();
 
         return response()->noContent();
     }
