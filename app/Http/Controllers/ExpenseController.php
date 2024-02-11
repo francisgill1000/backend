@@ -23,6 +23,8 @@ class ExpenseController extends Controller
             $query->filter($startDate, $endDate);
         }
 
+        $query->where("user_id", request("user_id") ?? 0);
+
         // Paginate the results (default to 10 items per page if not specified)
         $query->orderBy("id", "desc");
 
