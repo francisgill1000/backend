@@ -9,20 +9,11 @@ use Illuminate\Http\Request;
 
 class StatsController extends Controller
 {
-    public function index()
+    public function getTodayStats()
     {
 
         $expenseToday = Expense::whereDate('date', now()->toDateString())->sum('amount');
         $incomeToday = Income::whereDate('date', now()->toDateString())->sum('amount');
-
-        $expenseToday = 50;
-        $incomeToday = 10;
-
-        $expenseWeekly = Expense::whereBetween('date', [now()->startOfWeek(), now()->endOfWeek()])->sum('amount');
-        $incomeWeekly = Income::whereBetween('date', [now()->startOfWeek(), now()->endOfWeek()])->sum('amount');
-
-        $expenseMonthly = Expense::whereMonth('date', now()->month)->sum('amount');
-        $incomeMonthly = Income::whereMonth('date', now()->month)->sum('amount');
 
         $jsonData = [
             [
@@ -33,6 +24,17 @@ class StatsController extends Controller
                     ['label' => 'Profit/Loss', 'value' => $incomeToday - $expenseToday],
                 ],
             ],
+        ];
+
+        return response()->json($jsonData);
+    }
+
+    public function getWeeklyStats()
+    {
+        $expenseWeekly = Expense::whereBetween('date', [now()->startOfWeek(), now()->endOfWeek()])->sum('amount');
+        $incomeWeekly = Income::whereBetween('date', [now()->startOfWeek(), now()->endOfWeek()])->sum('amount');
+
+        $jsonData = [
             [
                 'title' => 'Weekly',
                 'data' => [
@@ -41,6 +43,17 @@ class StatsController extends Controller
                     ['label' => 'Profit/Loss', 'value' => $incomeWeekly - $expenseWeekly],
                 ],
             ],
+        ];
+
+        return response()->json($jsonData);
+    }
+
+    public function getMonthlyStats()
+    {
+        $expenseMonthly = Expense::whereMonth('date', now()->month)->sum('amount');
+        $incomeMonthly = Income::whereMonth('date', now()->month)->sum('amount');
+
+        $jsonData = [
             [
                 'title' => 'Monthly',
                 'data' => [
