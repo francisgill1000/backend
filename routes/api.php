@@ -41,5 +41,5 @@ Route::get("weeklyIncome", [IncomeController::class, "weeklyIncome"]);
 Route::get("monthlyIncome", [IncomeController::class, "monthlyIncome"]);
 
 
-Route::get("stats", [StatsController::class, "indddddddddddex"]);
+Route::get("stats", [StatsController::class, "index"]);
 
