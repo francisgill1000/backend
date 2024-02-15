@@ -51,9 +51,18 @@ class ExpenseController extends Controller
 
     public function weeklyExpense()
     {
+        $startDate = now()->subDays(7)->startOfDay();
+
+        $endDate = now()->endOfDay();
+    
         $query = Expense::query();
-        $query->filter(now()->startOfWeek(), now()->endOfWeek());
-        return number_format($query->where("user_id", request("user_id") ?? 0)->sum("amount"), 2);
+
+        $query->whereBetween('date', [$startDate, $endDate]);
+        
+        $query->where('user_id', request('user_id') ?? 0);
+    
+        return number_format($query->sum('amount'), 2);
+
     }
 
     public function monthlyExpense()
