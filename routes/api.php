@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\IncomeController;
+use App\Http\Controllers\StatsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,7 @@ Route::middleware('auth:sanctum')->get("logout", [AuthController::class, "logout
 
 
 Route::apiResource("expense", ExpenseController::class);
+Route::get("customExpense", [ExpenseController::class, "customExpense"]);
 Route::get("todayExpense", [ExpenseController::class, "todayExpense"]);
 Route::get("weeklyExpense", [ExpenseController::class, "weeklyExpense"]);
 Route::get("monthlyExpense", [ExpenseController::class, "monthlyExpense"]);
@@ -37,3 +39,7 @@ Route::apiResource("income", IncomeController::class);
 Route::get("todayIncome", [IncomeController::class, "todayIncome"]);
 Route::get("weeklyIncome", [IncomeController::class, "weeklyIncome"]);
 Route::get("monthlyIncome", [IncomeController::class, "monthlyIncome"]);
+
+
+Route::get("stats", [StatsController::class, "indddddddddddex"]);
+

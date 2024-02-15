@@ -31,23 +31,36 @@ class ExpenseController extends Controller
         return $query->paginate(request('itemsPerPage') ?? 15);
     }
 
+    public function customExpense()
+    {
+        $query = Expense::query();
+
+        $query->filter(request('start_date') ?? date("Y-m-d"), request('end_date') ?? date("Y-m-d"));
+
+        $query->where("user_id", request("user_id") ?? 0);
+
+        return $query->sum("amount");
+    }
+
     public function todayExpense()
     {
         $query = Expense::query();
         $query->filter(date("Y-m-24"), date("Y-m-24"));
-        return number_format($query->sum("amount"), 2);
+        return number_format($query->where("user_id", request("user_id") ?? 0)->sum("amount"), 2);
     }
 
     public function weeklyExpense()
     {
         $query = Expense::query();
         $query->filter(now()->startOfWeek(), now()->endOfWeek());
-        return number_format($query->sum("amount"), 2);
+        return number_format($query->where("user_id", request("user_id") ?? 0)->sum("amount"), 2);
     }
 
     public function monthlyExpense()
     {
-        return number_format(Expense::whereMonth("date", date("m"))->sum("amount"), 2);
+        $model = Expense::whereMonth("date", date("m"))->where("user_id", request("user_id") ?? 0)->sum("amount");
+
+        return number_format($model, 2);
     }
 
     /**
