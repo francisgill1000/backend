@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\IncomeController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\StatsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -44,3 +45,7 @@ Route::get("monthlyIncome", [IncomeController::class, "monthlyIncome"]);
 Route::get("today-stats", [StatsController::class, "getTodayStats"]);
 Route::get("weekly-stats", [StatsController::class, "getWeeklyStats"]);
 Route::get("monthly-stats", [StatsController::class, "getMonthlyStats"]);
+
+
+
+Route::apiResource("item", ItemController::class);
