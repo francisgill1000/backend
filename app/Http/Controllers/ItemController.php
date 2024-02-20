@@ -22,7 +22,17 @@ class ItemController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        return Item::create($request->validated());
+        $data = $request->validated();
+
+        if (isset($request->src)) {
+            $file = $request->file('src');
+            $ext = $file->getClientOriginalExtension();
+            $fileName = time() . '.' . $ext;
+            $request->file('src')->move(public_path('items'), $fileName);
+            $data['src'] = $fileName;
+        }
+
+        return Item::create($data);
     }
 
     /**
@@ -43,6 +53,21 @@ class ItemController extends Controller
         return $Item;
     }
 
+
+    public function itemUpdate(StoreRequest $request, $id)
+    {
+        $data = $request->validated();
+
+        if (isset($request->src)) {
+            $file = $request->file('src');
+            $ext = $file->getClientOriginalExtension();
+            $fileName = time() . '.' . $ext;
+            $request->file('src')->move(public_path('items'), $fileName);
+            $data['src'] = $fileName;
+        }
+
+        return Item::where("id", $id)->update($data);
+    }
     /**
      * Remove the specified resource from storage.
      */

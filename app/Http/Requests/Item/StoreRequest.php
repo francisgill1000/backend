@@ -24,7 +24,7 @@ class StoreRequest extends FormRequest
         return [
             "label" => "required",
             "amount" => "required",
-            "src" => "nullable",
+            "src" => "image",
         ];
     }
 }

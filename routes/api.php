@@ -47,5 +47,6 @@ Route::get("weekly-stats", [StatsController::class, "getWeeklyStats"]);
 Route::get("monthly-stats", [StatsController::class, "getMonthlyStats"]);
 
 
+Route::post("item-update/{id}", [ItemController::class, "itemUpdate"]);
 
 Route::apiResource("item", ItemController::class);

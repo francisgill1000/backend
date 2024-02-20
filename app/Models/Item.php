@@ -10,4 +10,9 @@ class Item extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function getSrcAttribute($value)
+    {
+        return asset("items/" . $value);
+    }
 }
