@@ -41,7 +41,7 @@ class StatsController extends Controller
 
 
         // if user occupation is (salaried persion)
-        $incomeToday = Income::whereMonth('date', now()->month)->where("user_id", request("user_id") ?? 0)->sum('amount');
+        $incomeWeekly = Income::whereMonth('date', now()->month)->where("user_id", request("user_id") ?? 0)->sum('amount');
 
 
         $jsonData = [
