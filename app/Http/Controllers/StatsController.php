@@ -12,8 +12,8 @@ class StatsController extends Controller
     public function getTodayStats()
     {
 
-        $expenseToday = Expense::whereDate('date', now()->toDateString())->sum('amount');
-        $incomeToday = Income::whereDate('date', now()->toDateString())->sum('amount');
+        $expenseToday = Expense::whereDate('date', now()->toDateString())->where("user_id", request("user_id") ?? 0)->sum('amount');
+        $incomeToday = Income::whereDate('date', now()->toDateString())->where("user_id", request("user_id") ?? 0)->sum('amount');
 
         $jsonData = [
             [
@@ -31,8 +31,8 @@ class StatsController extends Controller
 
     public function getWeeklyStats()
     {
-        $expenseWeekly = Expense::whereBetween('date', [now()->startOfWeek(), now()->endOfWeek()])->sum('amount');
-        $incomeWeekly = Income::whereBetween('date', [now()->startOfWeek(), now()->endOfWeek()])->sum('amount');
+        $expenseWeekly = Expense::whereBetween('date', [now()->startOfWeek(), now()->endOfWeek()])->where("user_id", request("user_id") ?? 0)->sum('amount');
+        $incomeWeekly = Income::whereBetween('date', [now()->startOfWeek(), now()->endOfWeek()])->where("user_id", request("user_id") ?? 0)->sum('amount');
 
         $jsonData = [
             [
@@ -50,8 +50,8 @@ class StatsController extends Controller
 
     public function getMonthlyStats()
     {
-        $expenseMonthly = Expense::whereMonth('date', now()->month)->sum('amount');
-        $incomeMonthly = Income::whereMonth('date', now()->month)->sum('amount');
+        $expenseMonthly = Expense::whereMonth('date', now()->month)->where("user_id", request("user_id") ?? 0)->sum('amount');
+        $incomeMonthly = Income::whereMonth('date', now()->month)->where("user_id", request("user_id") ?? 0)->sum('amount');
 
         $jsonData = [
             [
