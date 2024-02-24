@@ -15,6 +15,11 @@ class StatsController extends Controller
         $expenseToday = Expense::whereDate('date', now()->toDateString())->where("user_id", request("user_id") ?? 0)->sum('amount');
         $incomeToday = Income::whereDate('date', now()->toDateString())->where("user_id", request("user_id") ?? 0)->sum('amount');
 
+
+        // if user occupation is (salaried persion)
+        $incomeToday = Income::whereMonth('date', now()->month)->where("user_id", request("user_id") ?? 0)->sum('amount');
+
+
         $jsonData = [
             [
                 'title' => 'Today',
@@ -33,6 +38,11 @@ class StatsController extends Controller
     {
         $expenseWeekly = Expense::whereBetween('date', [now()->startOfWeek(), now()->endOfWeek()])->where("user_id", request("user_id") ?? 0)->sum('amount');
         $incomeWeekly = Income::whereBetween('date', [now()->startOfWeek(), now()->endOfWeek()])->where("user_id", request("user_id") ?? 0)->sum('amount');
+
+
+        // if user occupation is (salaried persion)
+        $incomeToday = Income::whereMonth('date', now()->month)->where("user_id", request("user_id") ?? 0)->sum('amount');
+
 
         $jsonData = [
             [
