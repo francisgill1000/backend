@@ -2,4 +2,4 @@
 
 @REM for backend
 @set PATH=php;%PATH%
-code .
+start cmd

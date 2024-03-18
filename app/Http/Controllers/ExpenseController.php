@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Expense\StoreRequest;
+use App\Http\Requests\Expense\UpdateRequest;
 use App\Models\Expense;
 use Illuminate\Http\Request;
 
@@ -95,7 +96,7 @@ class ExpenseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Expense $expense)
+    public function update(UpdateRequest $request, Expense $expense)
     {
         $expense->update($request->validated());
 
@@ -111,4 +112,17 @@ class ExpenseController extends Controller
 
         return response()->noContent();
     }
+
+    public function monthlyChartData() {
+        
+        $query = Expense::query();
+
+        $query->whereMonth('date', date("m"));
+        
+        $query->where('user_id', request('user_id') ?? 0);
+
+        return $query->get();
+    
+    }
+    
 }
