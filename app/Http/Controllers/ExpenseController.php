@@ -113,16 +113,56 @@ class ExpenseController extends Controller
         return response()->noContent();
     }
 
-    public function monthlyChartData() {
+    // public function monthlyChartData() {
         
-        $query = Expense::query();
+    //     $query = Expense::query();
 
-        $query->whereMonth('date', date("m"));
+    //     $query->whereMonth('date', date("m"));
         
-        $query->where('user_id', request('user_id') ?? 0);
+    //     $query->where('user_id', request('user_id') ?? 0);
 
-        return $query->get();
+    //     return $query->get();
     
+    // }
+
+
+    public function monthlyChartData() {
+        // Get the current month and year
+        $currentMonth = date('m');
+        $currentYear = date('Y');
+    
+        // Initialize an array to hold the daily expense sums
+        $dailyExpenseSums = [];
+
+
+        $labels = [];
+        $values = [];
+
+    
+        // Loop through each day of the month
+        for ($day = 1; $day <= cal_days_in_month(CAL_GREGORIAN, $currentMonth, $currentYear); $day++) {
+            // Get the expenses for the current day
+            $expenses = Expense::whereYear('date', $currentYear)
+                                ->whereMonth('date', $currentMonth)
+                                ->whereDay('date', $day)
+                                ->where('user_id', request('user_id') ?? 0)
+                                ->get();
+    
+            // Calculate the sum of expenses for the current day
+            $dailyExpenseSum = $expenses->sum('amount');
+    
+            // Store the sum in the array, keyed by the day of the month
+
+            $labels[] = $day;
+            $values[] =$dailyExpenseSum;
+
+        }
+    
+        return ["labels" => $labels,"values" => $values];
     }
+    
+
+
+    
     
 }
