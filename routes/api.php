@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\IncomeController;
@@ -19,6 +20,9 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+Route::get("web-view-url", [Controller::class, "getWebViewUrl"]);
+
 
 Route::get("user", [UserController::class, "index"]);
 Route::post("user", [UserController::class, "store"]);
