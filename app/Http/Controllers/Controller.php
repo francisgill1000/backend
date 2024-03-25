@@ -12,7 +12,7 @@ class Controller extends BaseController
 
 
     public function getWebViewUrl() {
-        return request("url");
+        // return request("url");
         return "https://alarm.xtremeguard.org/login/";
     }
 }
